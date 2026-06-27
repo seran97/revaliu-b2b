@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibración de Modelos de Scoring e Insolvencia para Cooperativas Colombia | Revaliu</title>
+<meta name="description" content="Modelos de scoring e insolvencia calibrados para cooperativas y el sector solidario en Colombia. Reducimos su cartera vencida con modelos cuantitativos a medida.">
+<meta name="keywords" content="calibración modelos scoring Colombia, modelos insolvencia cooperativas, gestión riesgo crédito sector solidario, cartera vencida cooperativas Colombia">
+<link rel="canonical" href="https://revaliu.com/modelos-riesgo/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Modelos de Riesgo Cuantitativo para Cooperativas",
+  "provider": { "@type": "Organization", "name": "Revaliu", "telephone": "+573184322874" },
+  "areaServed": "CO",
+  "description": "Calibración de modelos de scoring e insolvencia para cooperativas y sector solidario en Colombia"
+}
+</script>
+<style>
+  :root { --navy:#0D1B2A; --navy2:#1B2D40; --gold:#C9A84C; --gold-light:#E8C97A; --white:#FFFFFF; --gray:#F4F6F8; --text:#2D3748; --text-light:#718096; --red:#E53E3E; --green:#38A169; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white)}
+  nav{background:var(--navy);padding:0 5%;display:flex;justify-content:space-between;align-items:center;height:64px;position:sticky;top:0;z-index:100}
+  .logo{color:var(--gold);font-size:1.4rem;font-weight:700;letter-spacing:1px;text-decoration:none}
+  .nav-links a{color:rgba(255,255,255,.8);text-decoration:none;margin-left:24px;font-size:.92rem}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-cta{background:var(--gold);color:var(--navy)!important;padding:8px 18px;border-radius:6px;font-weight:600}
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:90px 5% 70px;text-align:center}
+  .breadcrumb{color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:20px}
+  .breadcrumb a{color:var(--gold);text-decoration:none}
+  .hero-tag{display:inline-block;background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:6px 16px;border-radius:20px;font-size:.85rem;margin-bottom:20px}
+  h1{color:var(--white);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;line-height:1.25;max-width:800px;margin:0 auto 20px}
+  h1 span{color:var(--gold)}
+  .hero p{color:rgba(255,255,255,.75);font-size:1.1rem;max-width:600px;margin:0 auto 32px;line-height:1.7}
+  .btn-primary{background:var(--gold);color:var(--navy);padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none;display:inline-block;transition:all .2s}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+  .section{padding:70px 5%;max-width:1100px;margin:0 auto}
+  .section-tag{color:var(--gold);font-weight:600;font-size:.88rem;letter-spacing:1px;text-transform:uppercase}
+  h2{font-size:clamp(1.5rem,2.8vw,2.1rem);color:var(--navy);margin:12px 0 36px}
+  .gray-bg{background:var(--gray)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .two-col p{color:var(--text-light);line-height:1.75;margin-bottom:16px;font-size:.97rem}
+  .problem-card{background:var(--white);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:20px 24px;margin-bottom:16px}
+  .problem-card h4{color:var(--red);font-size:.95rem;margin-bottom:6px}
+  .problem-card p{color:var(--text-light);font-size:.9rem;margin:0}
+  .solution-card{background:var(--white);border-left:4px solid var(--green);border-radius:0 10px 10px 0;padding:20px 24px;margin-bottom:16px}
+  .solution-card h4{color:var(--green);font-size:.95rem;margin-bottom:6px}
+  .solution-card p{color:var(--text-light);font-size:.9rem;margin:0}
+  .models-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .model-card{border:1px solid #E2E8F0;border-radius:12px;padding:28px 24px;transition:all .3s}
+  .model-card:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(201,168,76,.12)}
+  .model-icon{font-size:2rem;margin-bottom:14px}
+  .model-card h3{font-size:1.05rem;color:var(--navy);margin-bottom:10px}
+  .model-card p{font-size:.88rem;color:var(--text-light);line-height:1.6}
+  .tag{display:inline-block;background:rgba(201,168,76,.1);color:var(--gold);border-radius:4px;padding:2px 8px;font-size:.78rem;font-weight:600;margin-top:12px}
+  .impact-boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+  .impact-box{background:var(--navy);border-radius:12px;padding:28px 20px;text-align:center}
+  .impact-n{font-size:2.2rem;font-weight:800;color:var(--gold)}
+  .impact-l{color:rgba(255,255,255,.75);font-size:.88rem;margin-top:6px}
+  .faq{max-width:760px}
+  .faq-item{border-bottom:1px solid #E2E8F0;padding:20px 0}
+  .faq-q{font-weight:600;color:var(--navy);font-size:1rem;margin-bottom:10px}
+  .faq-a{color:var(--text-light);font-size:.93rem;line-height:1.7}
+  .cta-block{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:70px 5%;text-align:center}
+  .cta-block h2{color:var(--white);font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:14px}
+  .cta-block p{color:rgba(255,255,255,.75);font-size:1rem;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+  .btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:15px 34px;border-radius:8px;font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s}
+  .btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.35)}
+  footer{background:var(--navy);padding:36px 5%;text-align:center}
+  footer p{color:rgba(255,255,255,.5);font-size:.87rem}
+  footer a{color:var(--gold);text-decoration:none}
+  @media(max-width:768px){.two-col{grid-template-columns:1fr}nav .nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">REVALIU</a>
+  <div class="nav-links">
+    <a href="/modelos-riesgo/" style="color:var(--gold)">Riesgo Cuantitativo</a>
+    <a href="/project-finance/">Project Finance</a>
+    <a href="/tableros-financieros/">Tableros</a>
+    <a href="/tableros-kpi/">KPIs PM</a>
+    <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20necesito%20un%20modelo%20de%20scoring%20para%20mi%20cooperativa" target="_blank" class="nav-cta">Agendar Diagnóstico</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> › Modelos de Riesgo Cuantitativo</div>
+  <div class="hero-tag">Sector Solidario · Cooperativas · Colombia</div>
+  <h1>Calibración de <span>Modelos de Scoring e Insolvencia</span> para Cooperativas y Sector Solidario</h1>
+  <p>Un modelo de scoring mal calibrado le cuesta millones en cartera vencida. Le ayudamos a construir uno con sus datos reales, ajustado a la regulación colombiana.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20necesito%20un%20modelo%20de%20scoring%20o%20insolvencia%20para%20mi%20cooperativa%2C%20quisiera%20agendar%20un%20diagnóstico" target="_blank" class="btn-primary">📲 Solicitar Diagnóstico Gratuito</a>
+</section>
+
+<div class="section">
+  <div class="section-tag">El Problema</div>
+  <h2>¿Por qué su cooperativa sigue con cartera vencida alta?</h2>
+  <div class="two-col">
+    <div>
+      <div class="problem-card">
+        <h4>❌ Modelos genéricos que no funcionan</h4>
+        <p>Las plantillas estándar no capturan el comportamiento real de sus asociados. Son modelos hechos para banca comercial, no para el sector solidario.</p>
+      </div>
+      <div class="problem-card">
+        <h4>❌ Sin actualización periódica</h4>
+        <p>El modelo que construyeron hace 3 años ya no refleja el mercado actual. Los ciclos económicos de Colombia cambian el perfil de riesgo constantemente.</p>
+      </div>
+      <div class="problem-card">
+        <h4>❌ Variables incorrectas</h4>
+        <p>Muchas cooperativas usan edad, ingresos y deuda. Pero las variables que realmente predicen insolvencia en el sector solidario son diferentes.</p>
+      </div>
+    </div>
+    <div>
+      <div class="solution-card">
+        <h4>✅ Modelo calibrado con sus datos históricos</h4>
+        <p>Usamos el historial real de su cartera para identificar los patrones que predicen el incumplimiento con mayor precisión.</p>
+      </div>
+      <div class="solution-card">
+        <h4>✅ Variables validadas estadísticamente</h4>
+        <p>Aplicamos regresión logística, árboles de decisión y validación cruzada para seleccionar solo las variables con poder predictivo real.</p>
+      </div>
+      <div class="solution-card">
+        <h4>✅ Ajustado a Circular Básica Contable SFC</h4>
+        <p>Los modelos cumplen con los requerimientos regulatorios de la Superintendencia Financiera y Supersolidaria para provisiones.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section">
+  <div class="section-tag">Modelos que Ofrecemos</div>
+  <h2>Herramientas cuantitativas para gestión de riesgo de crédito</h2>
+  <div class="models-grid">
+    <div class="model-card">
+      <div class="model-icon">🎯</div>
+      <h3>Scoring de Originación</h3>
+      <p>Modelo de admisión que clasifica nuevos solicitantes por probabilidad de pago. Reduce admisiones malas hasta un 35%.</p>
+      <span class="tag">Regresión Logística · Scorecard</span>
+    </div>
+    <div class="model-card">
+      <div class="model-icon">⚠️</div>
+      <h3>Modelo de Insolvencia</h3>
+      <p>Predice qué créditos activos tienen mayor riesgo de caer en mora en los próximos 90 días. Permite intervención temprana.</p>
+      <span class="tag">Altman Z-Score adaptado · ML</span>
+    </div>
+    <div class="model-card">
+      <div class="model-icon">📉</div>
+      <h3>Scoring de Comportamiento</h3>
+      <p>Evalúa el riesgo de clientes actuales basado en su historial de pagos y cambios en su perfil financiero.</p>
+      <span class="tag">Series de tiempo · Markov Chains</span>
+    </div>
+    <div class="model-card">
+      <div class="model-icon">🏗️</div>
+      <h3>Modelo de Provisiones</h3>
+      <p>Cálculo técnico de provisiones bajo NIIF 9 / IFRS 9 con estimación de PD, LGD y EAD para su portafolio específico.</p>
+      <span class="tag">NIIF 9 · PD · LGD · EAD</span>
+    </div>
+    <div class="model-card">
+      <div class="model-icon">🔄</div>
+      <h3>Stress Testing</h3>
+      <p>Simulamos escenarios adversos (devaluación, alza en tasas, desaceleración) para cuantificar el impacto en su cartera.</p>
+      <span class="tag">Monte Carlo · Escenarios</span>
+    </div>
+    <div class="model-card">
+      <div class="model-icon">📊</div>
+      <h3>Dashboard de Riesgo</h3>
+      <p>Tablero en tiempo real con los principales indicadores de su portafolio: mora por cosecha, segmento y producto.</p>
+      <span class="tag">Streamlit · Python · SQL</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+  <div class="section-tag">Impacto Real</div>
+  <h2>Lo que un buen modelo de scoring le genera</h2>
+  <div class="impact-boxes">
+    <div class="impact-box"><div class="impact-n">-28%</div><div class="impact-l">Reducción promedio en cartera vencida (primeros 12 meses)</div></div>
+    <div class="impact-box"><div class="impact-n">+40%</div><div class="impact-l">Mayor precisión en admisión de crédito vs. criterio experto</div></div>
+    <div class="impact-box"><div class="impact-n">48h</div><div class="impact-l">Diagnóstico inicial de su portafolio actual</div></div>
+    <div class="impact-box"><div class="impact-n">SFC</div><div class="impact-l">Alineado con regulación Superfinanciera y Supersolidaria</div></div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section faq">
+  <div class="section-tag">Preguntas Frecuentes</div>
+  <h2>Lo que nos preguntan las cooperativas</h2>
+  <div class="faq-item">
+    <div class="faq-q">¿Cuántos datos históricos necesitamos para calibrar el modelo?</div>
+    <div class="faq-a">Idealmente 3 años de historial de créditos con indicador de pago/mora. Con 18 meses ya podemos construir un modelo funcional, aunque con menor robustez estadística.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">¿El modelo que entregan es nuestro o dependen de ustedes para actualizarlo?</div>
+    <div class="faq-a">El modelo es completamente suyo. Entregamos el código fuente en Python, la documentación técnica y metodológica, y capacitamos a su equipo para actualizarlo. No hay dependencia de nosotros.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">¿Qué diferencia hay entre un scoring genérico y uno calibrado con nuestros datos?</div>
+    <div class="faq-a">Un modelo genérico tiene precisiones del 55-65% en el sector solidario colombiano. Un modelo calibrado con sus propios datos históricos puede alcanzar 75-85% de precisión, lo que se traduce directamente en menos créditos malos aprobados.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">¿Trabajan con cooperativas pequeñas o solo con entidades grandes?</div>
+    <div class="faq-a">Trabajamos con cooperativas desde 500 asociados. El tamaño mínimo lo define la cantidad de datos históricos, no el volumen de activos.</div>
+  </div>
+</div>
+</div>
+
+<section class="cta-block">
+  <h2>¿Listo para reducir su cartera vencida con un modelo propio?</h2>
+  <p>Cuéntenos el tamaño de su portafolio y le explicamos qué modelo se ajusta mejor a su cooperativa. Sin costo.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20somos%20una%20cooperativa%20y%20necesitamos%20mejorar%20nuestro%20modelo%20de%20scoring.%20Quisiera%20un%20diagnóstico" target="_blank" class="btn-wa">
+    💬 Hablar con Sergio Ahora
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 Revaliu · <a href="/">Inicio</a> · <a href="/project-finance/">Project Finance</a> · <a href="/tableros-financieros/">Tableros</a><br>
+  <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> · <a href="https://wa.me/573184322874">+57 318 432 2874</a></p>
+</footer>
+</body>
+</html>

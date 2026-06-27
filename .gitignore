@@ -1,0 +1,7 @@
+db/*.db
+__pycache__/
+*.pyc
+.env
+.last_blog_run
+main_output.log
+main_error.log

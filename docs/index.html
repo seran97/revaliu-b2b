@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revaliu — Consultoría Cuantitativa y Estructuración Financiera Colombia</title>
+<meta name="description" content="Modelos de riesgo cuantitativo, estructuración de Project Finance y tableros financieros automatizados para empresas y cooperativas en Colombia y LatAm.">
+<meta name="keywords" content="consultoría financiera Colombia, modelos de riesgo cuantitativo, project finance Colombia, tableros financieros Streamlit">
+<link rel="canonical" href="https://revaliu.com/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Revaliu",
+  "description": "Consultoría cuantitativa y estructuración financiera en Colombia y LatAm",
+  "telephone": "+573184322874",
+  "areaServed": ["CO", "LatAm"],
+  "serviceType": ["Riesgo Cuantitativo", "Project Finance", "Automatización Financiera"]
+}
+</script>
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy2: #1B2D40;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --white: #FFFFFF;
+    --gray: #F4F6F8;
+    --text: #2D3748;
+    --text-light: #718096;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--white); }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 64px; position: sticky; top: 0; z-index: 100; }
+  .logo { color: var(--gold); font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; text-decoration: none; }
+  .nav-links a { color: rgba(255,255,255,.8); text-decoration: none; margin-left: 28px; font-size: .92rem; transition: color .2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 8px 18px; border-radius: 6px; font-weight: 600; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); padding: 100px 5% 80px; text-align: center; }
+  .hero-tag { display: inline-block; background: rgba(201,168,76,.15); color: var(--gold); border: 1px solid rgba(201,168,76,.3); padding: 6px 16px; border-radius: 20px; font-size: .85rem; letter-spacing: .5px; margin-bottom: 24px; }
+  .hero h1 { color: var(--white); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.2; max-width: 780px; margin: 0 auto 20px; }
+  .hero h1 span { color: var(--gold); }
+  .hero p { color: rgba(255,255,255,.75); font-size: 1.15rem; max-width: 600px; margin: 0 auto 36px; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all .2s; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-secondary { border: 2px solid rgba(255,255,255,.4); color: var(--white); padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all .2s; }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* STATS */
+  .stats { background: var(--gold); padding: 32px 5%; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-n { font-size: 2rem; font-weight: 800; color: var(--navy); }
+  .stat-l { font-size: .85rem; color: var(--navy); opacity: .8; font-weight: 500; }
+
+  /* SERVICES */
+  .section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+  .section-tag { color: var(--gold); font-weight: 600; font-size: .9rem; letter-spacing: 1px; text-transform: uppercase; }
+  .section h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); color: var(--navy); margin: 12px 0 48px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; }
+  .card { border: 1px solid #E2E8F0; border-radius: 12px; padding: 32px 28px; transition: all .3s; text-decoration: none; color: inherit; display: block; }
+  .card:hover { border-color: var(--gold); box-shadow: 0 8px 32px rgba(201,168,76,.15); transform: translateY(-4px); }
+  .card-icon { font-size: 2.2rem; margin-bottom: 16px; }
+  .card h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 10px; }
+  .card p { font-size: .92rem; color: var(--text-light); line-height: 1.65; margin-bottom: 16px; }
+  .card-kw { font-size: .8rem; color: var(--gold); font-weight: 600; }
+  .card-link { color: var(--gold); font-weight: 600; font-size: .9rem; margin-top: 16px; display: block; }
+
+  /* METHODOLOGY */
+  .method-bg { background: var(--gray); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; counter-reset: step; }
+  .step { background: var(--white); border-radius: 10px; padding: 28px 24px; position: relative; }
+  .step::before { counter-increment: step; content: counter(step); position: absolute; top: -14px; left: 24px; background: var(--gold); color: var(--navy); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: .9rem; }
+  .step h4 { color: var(--navy); margin-bottom: 8px; font-size: 1rem; }
+  .step p { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+
+  /* WHATSAPP CTA */
+  .cta-block { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); padding: 80px 5%; text-align: center; }
+  .cta-block h2 { color: var(--white); font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 16px; }
+  .cta-block p { color: rgba(255,255,255,.75); font-size: 1.05rem; margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .btn-wa { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: #fff; padding: 16px 36px; border-radius: 8px; font-size: 1.05rem; font-weight: 700; text-decoration: none; transition: all .2s; }
+  .btn-wa:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.35); }
+  .wa-icon { font-size: 1.4rem; }
+
+  /* FORM */
+  .form-section { padding: 80px 5%; max-width: 720px; margin: 0 auto; }
+  .form-section h2 { color: var(--navy); font-size: 1.9rem; margin-bottom: 8px; }
+  .form-section p { color: var(--text-light); margin-bottom: 36px; }
+  form { display: grid; gap: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  label { font-size: .88rem; font-weight: 600; color: var(--navy); display: block; margin-bottom: 6px; }
+  input, select, textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #CBD5E0; border-radius: 8px; font-size: .95rem; color: var(--text); outline: none; transition: border .2s; font-family: inherit; }
+  input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+  .btn-form { background: var(--navy); color: var(--white); padding: 14px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .2s; }
+  .btn-form:hover { background: var(--gold); color: var(--navy); }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 40px 5%; text-align: center; }
+  footer p { color: rgba(255,255,255,.5); font-size: .88rem; }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    .stats { gap: 32px; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">REVALIU</a>
+  <div class="nav-links">
+    <a href="/modelos-riesgo/">Riesgo Cuantitativo</a>
+    <a href="/project-finance/">Project Finance</a>
+    <a href="/tableros-financieros/">Tableros</a>
+    <a href="/tableros-kpi/">KPIs PM</a>
+    <a href="/blog/">Blog</a>
+    <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20quiero%20agendar%20un%20diagnóstico%20financiero" target="_blank" class="nav-cta">Agendar Diagnóstico</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Consultoría Cuantitativa · Colombia &amp; LatAm</div>
+  <h1>Decisiones financieras respaldadas por <span>modelos que funcionan</span></h1>
+  <p>Estructuramos proyectos de fondeo, calibramos modelos de riesgo para cooperativas y automatizamos sus métricas con tableros en tiempo real.</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20quiero%20agendar%20un%20diagnóstico%20financiero" target="_blank" class="btn-primary">📲 Agendar Diagnóstico Gratis</a>
+    <a href="#servicios" class="btn-secondary">Ver Servicios</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">&gt;5.000M</div><div class="stat-l">COP estructurado en proyectos</div></div>
+  <div class="stat"><div class="stat-n">12+</div><div class="stat-l">Cooperativas asesoradas</div></div>
+  <div class="stat"><div class="stat-n">48h</div><div class="stat-l">Diagnóstico inicial entregado</div></div>
+  <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Cuantitativo · Sin humo</div></div>
+</div>
+
+<div id="servicios">
+<div class="section">
+  <div class="section-tag">Nuestros Servicios</div>
+  <h2>Cuatro verticales especializadas para su empresa</h2>
+  <div class="cards">
+
+    <a class="card" href="/modelos-riesgo/">
+      <div class="card-icon">📊</div>
+      <h3>Modelos de Riesgo Cuantitativo</h3>
+      <p>Calibración de scoring e insolvencia para cooperativas y sector solidario. Reducimos su cartera vencida con modelos estadísticos ajustados a su portafolio real.</p>
+      <div class="card-kw">Scoring · Insolvencia · Sector Solidario</div>
+      <span class="card-link">Ver servicio →</span>
+    </a>
+
+    <a class="card" href="/project-finance/">
+      <div class="card-icon">🏦</div>
+      <h3>Project Finance &gt;5.000M COP</h3>
+      <p>Estructuramos y empaquetamos su proyecto para que Davivienda, Bancolombia o fondos privados lo aprueben. Consecución de recursos y banca local.</p>
+      <div class="card-kw">Fondeo · Estructuración · Banca Local</div>
+      <span class="card-link">Ver servicio →</span>
+    </a>
+
+    <a class="card" href="/tableros-financieros/">
+      <div class="card-icon">📈</div>
+      <h3>Tableros Financieros Automatizados</h3>
+      <p>De Excel a un dashboard Streamlit con SQL en tiempo real. Automatización de procesos contables y visualización de métricas críticas para PyMEs.</p>
+      <div class="card-kw">Streamlit · Python · SQL · Automatización</div>
+      <span class="card-link">Ver servicio →</span>
+    </a>
+
+    <a class="card" href="/tableros-kpi/">
+      <div class="card-icon">🎯</div>
+      <h3>Tableros KPI para Project Managers</h3>
+      <p>Control de avance, presupuesto y recursos de sus proyectos en un solo panel. Indicadores de semáforo, alertas automáticas y reportes para gerencia.</p>
+      <div class="card-kw">KPIs · Project Management · Alertas</div>
+      <span class="card-link">Ver servicio →</span>
+    </a>
+
+  </div>
+</div>
+</div>
+
+<div class="method-bg">
+<div class="section">
+  <div class="section-tag">Metodología</div>
+  <h2>¿Cómo trabajamos?</h2>
+  <div class="steps">
+    <div class="step">
+      <h4>Diagnóstico Cuantitativo</h4>
+      <p>Analizamos sus datos reales: portafolio, flujos, estructura de capital. Sin suposiciones, sin plantillas genéricas.</p>
+    </div>
+    <div class="step">
+      <h4>Modelo a Medida</h4>
+      <p>Construimos o calibramos el modelo específico para su sector, tamaño y regulación colombiana aplicable.</p>
+    </div>
+    <div class="step">
+      <h4>Implementación Técnica</h4>
+      <p>Entregamos código Python funcional, tableros desplegados y documentación ejecutiva para su junta directiva.</p>
+    </div>
+    <div class="step">
+      <h4>Seguimiento Activo</h4>
+      <p>No desaparecemos tras entregar. Monitoreamos el desempeño del modelo y ajustamos cuando el mercado cambia.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<section class="cta-block">
+  <h2>¿Su empresa necesita fondeo o un modelo de riesgo?</h2>
+  <p>Cuéntenos su caso. En 48 horas le enviamos un diagnóstico inicial sin costo. Solo respondemos a proyectos serios.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20vi%20el%20sitio%20de%20Revaliu%20y%20quisiera%20agendar%20un%20diagnóstico%20para%20mi%20empresa" target="_blank" class="btn-wa">
+    <span class="wa-icon">💬</span> Escribir al WhatsApp Ahora
+  </a>
+</section>
+
+<div class="form-section">
+  <h2>Formulario de Pre-Calificación</h2>
+  <p>Complete el formulario y lo contactamos en menos de 24 horas hábiles.</p>
+  <form id="leadForm" onsubmit="submitLead(event)">
+    <div class="form-row">
+      <div>
+        <label>Nombre completo *</label>
+        <input type="text" name="nombre" required placeholder="Ej. Carlos Martínez">
+      </div>
+      <div>
+        <label>Empresa *</label>
+        <input type="text" name="empresa" required placeholder="Ej. Cooperativa Financiera XYZ">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label>Email corporativo *</label>
+        <input type="email" name="email" required placeholder="carlos@empresa.com">
+      </div>
+      <div>
+        <label>WhatsApp / Teléfono *</label>
+        <input type="tel" name="telefono" required placeholder="+57 300 000 0000">
+      </div>
+    </div>
+    <div>
+      <label>Servicio de interés *</label>
+      <select name="vertical" required>
+        <option value="">Seleccione...</option>
+        <option value="modelos-riesgo">Modelos de Riesgo / Scoring</option>
+        <option value="project-finance">Project Finance (&gt;5.000M COP)</option>
+        <option value="tableros-financieros">Tableros Financieros Automatizados</option>
+        <option value="tableros-kpi">Tableros KPI para Proyectos</option>
+        <option value="otro">Otro / Consulta general</option>
+      </select>
+    </div>
+    <div id="monto-field" style="display:none">
+      <label>Monto aproximado del proyecto (COP)</label>
+      <select name="monto_cop">
+        <option value="">Seleccione rango...</option>
+        <option value="1000000000">500M – 1.000M COP</option>
+        <option value="3000000000">1.000M – 5.000M COP</option>
+        <option value="10000000000">5.000M – 20.000M COP</option>
+        <option value="50000000000">&gt;20.000M COP</option>
+      </select>
+    </div>
+    <div>
+      <label>Cuéntenos brevemente su necesidad</label>
+      <textarea name="mensaje" rows="4" placeholder="Ej. Somos una cooperativa con 2.000 asociados y necesitamos mejorar nuestro modelo de scoring para reducir la cartera vencida..."></textarea>
+    </div>
+    <button type="submit" class="btn-form">📩 Enviar y Agendar Diagnóstico</button>
+  </form>
+  <div id="form-success" style="display:none; background:#F0FFF4; border:1px solid #9AE6B4; border-radius:8px; padding:20px; margin-top:20px; text-align:center;">
+    <strong style="color:#276749;">✅ Formulario enviado.</strong><br>
+    <p style="color:#276749; margin-top:8px;">Lo contactamos en menos de 24 horas. También puede escribirnos directamente al WhatsApp:</p>
+    <a href="https://wa.me/573184322874" target="_blank" style="color:#25D366; font-weight:700;">+57 318 432 2874</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Revaliu · Consultoría Cuantitativa y Estructuración Financiera<br>
+  Colombia &amp; LatAm · <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> ·
+  <a href="https://wa.me/573184322874" target="_blank">WhatsApp +57 318 432 2874</a></p>
+</footer>
+
+<script>
+  // Mostrar campo de monto solo para Project Finance
+  document.querySelector('[name="vertical"]').addEventListener('change', function() {
+    document.getElementById('monto-field').style.display =
+      this.value === 'project-finance' ? 'block' : 'none';
+  });
+
+  function submitLead(e) {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(e.target));
+    // Construir mensaje para WhatsApp
+    const msg = encodeURIComponent(
+      `🏢 NUEVO LEAD - Revaliu\n` +
+      `Nombre: ${data.nombre}\n` +
+      `Empresa: ${data.empresa}\n` +
+      `Email: ${data.email}\n` +
+      `Tel: ${data.telefono}\n` +
+      `Servicio: ${data.vertical}\n` +
+      `Monto: ${data.monto_cop || 'N/A'}\n` +
+      `Mensaje: ${data.mensaje || 'Sin mensaje'}`
+    );
+    // Abrir WhatsApp con el resumen del lead
+    window.open(`https://wa.me/573184322874?text=${msg}`, '_blank');
+    e.target.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>

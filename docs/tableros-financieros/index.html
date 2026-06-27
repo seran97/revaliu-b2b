@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableros Financieros Interactivos | Automatización Contable Python | Revaliu</title>
+<meta name="description" content="Tableros financieros en Streamlit conectados a bases de datos SQL. Automatización de procesos contables con Python. Dashboards a medida para PyMEs colombianas.">
+<meta name="keywords" content="desarrollo tableros financieros interactivos, automatización procesos contables Python, dashboards financieros a medida, Streamlit Colombia, reportes financieros automatizados">
+<link rel="canonical" href="https://revaliu.com/tableros-financieros/">
+<style>
+  :root{--navy:#0D1B2A;--navy2:#1B2D40;--gold:#C9A84C;--gold-light:#E8C97A;--white:#FFFFFF;--gray:#F4F6F8;--text:#2D3748;--text-light:#718096;--purple:#6B46C1;--teal:#2C7A7B}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white)}
+  nav{background:var(--navy);padding:0 5%;display:flex;justify-content:space-between;align-items:center;height:64px;position:sticky;top:0;z-index:100}
+  .logo{color:var(--gold);font-size:1.4rem;font-weight:700;letter-spacing:1px;text-decoration:none}
+  .nav-links a{color:rgba(255,255,255,.8);text-decoration:none;margin-left:24px;font-size:.92rem}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+  .nav-cta{background:var(--gold);color:var(--navy)!important;padding:8px 18px;border-radius:6px;font-weight:600}
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:90px 5% 70px;text-align:center}
+  .breadcrumb{color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:20px}
+  .breadcrumb a{color:var(--gold);text-decoration:none}
+  .hero-tag{display:inline-block;background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:6px 16px;border-radius:20px;font-size:.85rem;margin-bottom:20px}
+  h1{color:var(--white);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;line-height:1.25;max-width:820px;margin:0 auto 20px}
+  h1 span{color:var(--gold)}
+  .hero p{color:rgba(255,255,255,.75);font-size:1.1rem;max-width:600px;margin:0 auto 32px;line-height:1.7}
+  .btn-primary{background:var(--gold);color:var(--navy);padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none;display:inline-block;transition:all .2s}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+  .section{padding:70px 5%;max-width:1100px;margin:0 auto}
+  .section-tag{color:var(--gold);font-weight:600;font-size:.88rem;letter-spacing:1px;text-transform:uppercase}
+  h2{font-size:clamp(1.5rem,2.8vw,2.1rem);color:var(--navy);margin:12px 0 36px}
+  .gray-bg{background:var(--gray)}
+  /* MOCKUP DASHBOARD */
+  .dashboard-mock{background:var(--navy);border-radius:16px;padding:24px;max-width:900px;margin:0 auto 40px}
+  .mock-topbar{display:flex;gap:8px;margin-bottom:20px}
+  .mock-dot{width:12px;height:12px;border-radius:50%}
+  .mock-title{color:var(--gold);font-size:.9rem;font-weight:600;margin-left:auto}
+  .mock-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .mock-kpi{background:rgba(255,255,255,.07);border-radius:10px;padding:16px;text-align:center}
+  .mock-kpi-n{color:var(--gold);font-size:1.5rem;font-weight:800}
+  .mock-kpi-l{color:rgba(255,255,255,.6);font-size:.72rem;margin-top:4px}
+  .mock-chart-row{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+  .mock-chart{background:rgba(255,255,255,.07);border-radius:10px;padding:16px;min-height:100px;display:flex;align-items:flex-end;gap:6px}
+  .mock-bar{background:var(--gold);border-radius:4px 4px 0 0;width:100%;opacity:.8}
+  .mock-pie{background:rgba(255,255,255,.07);border-radius:10px;padding:16px;display:flex;align-items:center;justify-content:center}
+  .pie-visual{width:70px;height:70px;border-radius:50%;background:conic-gradient(var(--gold) 0deg 190deg,rgba(201,168,76,.3) 190deg 360deg)}
+  /* USE CASES */
+  .cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+  .case-card{border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;transition:all .3s}
+  .case-card:hover{box-shadow:0 8px 32px rgba(201,168,76,.12);transform:translateY(-3px)}
+  .case-header{background:var(--navy);padding:20px 24px}
+  .case-sector{color:var(--gold);font-size:.82rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+  .case-header h3{color:var(--white);font-size:1.05rem}
+  .case-body{padding:20px 24px}
+  .case-body p{font-size:.9rem;color:var(--text-light);line-height:1.65;margin-bottom:12px}
+  .case-metrics{display:flex;gap:12px;flex-wrap:wrap}
+  .metric-chip{background:rgba(201,168,76,.1);color:var(--gold);border-radius:4px;padding:4px 10px;font-size:.8rem;font-weight:600}
+  /* STACK */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+  .stack-item{background:var(--white);border:1px solid #E2E8F0;border-radius:10px;padding:20px;text-align:center}
+  .stack-icon{font-size:2rem;margin-bottom:10px}
+  .stack-item h4{color:var(--navy);font-size:.95rem;margin-bottom:6px}
+  .stack-item p{font-size:.82rem;color:var(--text-light);line-height:1.5}
+  /* PRICING */
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+  .price-card{border:2px solid #E2E8F0;border-radius:14px;padding:32px 28px;transition:all .3s}
+  .price-card.featured{border-color:var(--gold);background:linear-gradient(to bottom,rgba(201,168,76,.05),var(--white))}
+  .price-badge{background:var(--gold);color:var(--navy);padding:4px 12px;border-radius:4px;font-size:.8rem;font-weight:700;display:inline-block;margin-bottom:16px}
+  .price-card h3{color:var(--navy);font-size:1.2rem;margin-bottom:12px}
+  .price-card ul{list-style:none;margin-bottom:24px}
+  .price-card li{font-size:.9rem;color:var(--text-light);padding:6px 0;border-bottom:1px solid #F0F4F8;display:flex;gap:8px}
+  .price-card li::before{content:'✓';color:var(--gold);font-weight:700}
+  .btn-price{display:block;text-align:center;background:var(--navy);color:var(--white);padding:13px;border-radius:8px;font-weight:700;text-decoration:none;font-size:.95rem;transition:all .2s}
+  .price-card.featured .btn-price{background:var(--gold);color:var(--navy)}
+  .btn-price:hover{opacity:.9;transform:translateY(-1px)}
+  .cta-block{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:70px 5%;text-align:center}
+  .cta-block h2{color:var(--white);font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:14px}
+  .cta-block p{color:rgba(255,255,255,.75);font-size:1rem;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+  .btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:15px 34px;border-radius:8px;font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s}
+  .btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.35)}
+  footer{background:var(--navy);padding:36px 5%;text-align:center}
+  footer p{color:rgba(255,255,255,.5);font-size:.87rem}
+  footer a{color:var(--gold);text-decoration:none}
+  @media(max-width:768px){.mock-grid{grid-template-columns:1fr 1fr}.mock-chart-row{grid-template-columns:1fr}nav .nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">REVALIU</a>
+  <div class="nav-links">
+    <a href="/modelos-riesgo/">Riesgo Cuantitativo</a>
+    <a href="/project-finance/">Project Finance</a>
+    <a href="/tableros-financieros/" class="active">Tableros</a>
+    <a href="/tableros-kpi/">KPIs PM</a>
+    <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20necesito%20un%20tablero%20financiero%20automatizado%20para%20mi%20empresa" target="_blank" class="nav-cta">Agendar Demo</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> › Tableros Financieros</div>
+  <div class="hero-tag">Python · Streamlit · SQL · Tiempo Real</div>
+  <h1>De Excel a un <span>Dashboard Financiero en Tiempo Real</span> — Sin Comprar Software Caro</h1>
+  <p>Automatizamos sus reportes contables y financieros con Python y Streamlit. Una sola fuente de verdad para toda su empresa, actualizada automáticamente.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20quiero%20ver%20una%20demo%20de%20tablero%20financiero%20para%20mi%20empresa" target="_blank" class="btn-primary">📲 Ver Demo en 20 Minutos</a>
+</section>
+
+<div class="section">
+  <div class="section-tag">Vista Previa</div>
+  <h2>Así se ve un tablero financiero a medida</h2>
+  <div class="dashboard-mock">
+    <div class="mock-topbar">
+      <div class="mock-dot" style="background:#FF5F57"></div>
+      <div class="mock-dot" style="background:#FFBD2E"></div>
+      <div class="mock-dot" style="background:#28C840"></div>
+      <div class="mock-title">📊 Dashboard Financiero · Revaliu · Junio 2026</div>
+    </div>
+    <div class="mock-grid">
+      <div class="mock-kpi"><div class="mock-kpi-n">$4.2B</div><div class="mock-kpi-l">Ingresos YTD</div></div>
+      <div class="mock-kpi"><div class="mock-kpi-n" style="color:#68D391">32.4%</div><div class="mock-kpi-l">Margen Bruto</div></div>
+      <div class="mock-kpi"><div class="mock-kpi-n" style="color:#FC8181">-8.2%</div><div class="mock-kpi-l">vs. Presupuesto</div></div>
+      <div class="mock-kpi"><div class="mock-kpi-n" style="color:#90CDF4">1.84x</div><div class="mock-kpi-l">Liquidez Corriente</div></div>
+    </div>
+    <div class="mock-chart-row">
+      <div class="mock-chart">
+        <div class="mock-bar" style="height:40%"></div>
+        <div class="mock-bar" style="height:65%"></div>
+        <div class="mock-bar" style="height:55%"></div>
+        <div class="mock-bar" style="height:80%"></div>
+        <div class="mock-bar" style="height:70%"></div>
+        <div class="mock-bar" style="height:90%"></div>
+      </div>
+      <div class="mock-pie"><div class="pie-visual"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section">
+  <div class="section-tag">Casos de Uso</div>
+  <h2>Tableros que ya hemos construido</h2>
+  <div class="cases-grid">
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-sector">Cooperativa · Sector Solidario</div>
+        <h3>Monitor de Cartera en Tiempo Real</h3>
+      </div>
+      <div class="case-body">
+        <p>Tablero que conecta con la base de datos del core bancario y muestra en tiempo real: mora por cosecha, concentración por asociado, provisiones y alerta de créditos en riesgo.</p>
+        <div class="case-metrics">
+          <span class="metric-chip">SQL Server</span>
+          <span class="metric-chip">Streamlit</span>
+          <span class="metric-chip">Alerta automática</span>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-sector">PyME · Manufactura</div>
+        <h3>P&L Automatizado con Siesa</h3>
+      </div>
+      <div class="case-body">
+        <p>Reemplazamos el proceso manual de copiar datos de Siesa a Excel. El dashboard extrae automáticamente y presenta P&L, EBITDA y flujo de caja por línea de negocio.</p>
+        <div class="case-metrics">
+          <span class="metric-chip">Siesa ERP</span>
+          <span class="metric-chip">Python ETL</span>
+          <span class="metric-chip">Actualización diaria</span>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-header">
+        <div class="case-sector">Constructora</div>
+        <h3>Control de Proyectos y Flujo de Caja</h3>
+      </div>
+      <div class="case-body">
+        <p>Dashboard por obra: avance físico vs. financiero, flujo de caja proyectado, desviaciones vs. presupuesto y semáforo de riesgo por proyecto activo.</p>
+        <div class="case-metrics">
+          <span class="metric-chip">SQLite</span>
+          <span class="metric-chip">Plotly</span>
+          <span class="metric-chip">Multi-proyecto</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+  <div class="section-tag">Stack Tecnológico</div>
+  <h2>Las herramientas que usamos (sin costos de licencia)</h2>
+  <div class="stack-grid">
+    <div class="stack-item"><div class="stack-icon">🐍</div><h4>Python</h4><p>ETL, cálculos financieros y automatización de reportes</p></div>
+    <div class="stack-item"><div class="stack-icon">📊</div><h4>Streamlit</h4><p>Dashboard web interactivo sin necesidad de frontend</p></div>
+    <div class="stack-item"><div class="stack-icon">🗃️</div><h4>SQL / SQLite</h4><p>Base de datos de métricas financieras históricas</p></div>
+    <div class="stack-item"><div class="stack-icon">📈</div><h4>Plotly</h4><p>Gráficos interactivos: barras, líneas, waterfall, pie</p></div>
+    <div class="stack-item"><div class="stack-icon">📋</div><h4>Pandas</h4><p>Transformación y análisis de datos financieros</p></div>
+    <div class="stack-item"><div class="stack-icon">☁️</div><h4>Deploy Propio</h4><p>En su servidor, Streamlit Cloud o AWS. Sin vendor lock-in</p></div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section">
+  <div class="section-tag">Paquetes</div>
+  <h2>Elige el tablero que necesita su empresa</h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Tablero Starter</h3>
+      <ul>
+        <li>1 módulo (P&L o Flujo de Caja)</li>
+        <li>Conexión a Excel o CSV</li>
+        <li>3 gráficos interactivos</li>
+        <li>Filtros por fecha y área</li>
+        <li>Deploy en Streamlit Cloud</li>
+      </ul>
+      <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20me%20interesa%20el%20Tablero%20Starter%20para%20mi%20empresa" target="_blank" class="btn-price">Consultar precio</a>
+    </div>
+    <div class="price-card featured">
+      <span class="price-badge">Más Popular</span>
+      <h3>Tablero Empresarial</h3>
+      <ul>
+        <li>3 módulos a elegir</li>
+        <li>Conexión a SQL / ERP (Siesa, SAP, etc.)</li>
+        <li>Actualización automática diaria</li>
+        <li>Alertas por email o WhatsApp</li>
+        <li>Capacitación al equipo</li>
+        <li>1 mes de soporte incluido</li>
+      </ul>
+      <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20me%20interesa%20el%20Tablero%20Empresarial%20para%20mi%20empresa" target="_blank" class="btn-price">Consultar precio</a>
+    </div>
+    <div class="price-card">
+      <h3>Suite Financiera Completa</h3>
+      <ul>
+        <li>Módulos ilimitados</li>
+        <li>Integración con múltiples fuentes</li>
+        <li>Modelos predictivos incluidos</li>
+        <li>Alertas en tiempo real</li>
+        <li>Mantenimiento mensual</li>
+        <li>Prioridad en soporte</li>
+      </ul>
+      <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20quiero%20la%20Suite%20Financiera%20Completa%20para%20mi%20empresa" target="_blank" class="btn-price">Consultar precio</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<section class="cta-block">
+  <h2>¿Cuántas horas pierde su equipo cada mes en Excel?</h2>
+  <p>Le mostramos en una demo de 20 minutos cómo automatizarlo. Sin compromiso, sin costo.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20quiero%20una%20demo%20de%2020%20minutos%20del%20tablero%20financiero%20para%20mi%20empresa" target="_blank" class="btn-wa">
+    💬 Agendar Demo de 20 Minutos
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 Revaliu · <a href="/">Inicio</a> · <a href="/modelos-riesgo/">Riesgo Cuantitativo</a> · <a href="/tableros-kpi/">KPIs PM</a><br>
+  <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> · <a href="https://wa.me/573184322874">+57 318 432 2874</a></p>
+</footer>
+</body>
+</html>

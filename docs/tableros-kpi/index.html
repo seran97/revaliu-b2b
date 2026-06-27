@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableros KPI para Project Managers | Control de Proyectos en Tiempo Real | Revaliu</title>
+<meta name="description" content="Tableros KPI automatizados para gerentes de proyecto. Control de avance, presupuesto, recursos y alertas en tiempo real. Dashboards a medida en Streamlit y Python.">
+<meta name="keywords" content="tableros KPI project manager Colombia, dashboard control proyectos tiempo real, software gestión proyectos Colombia, automatización reportes PMO, indicadores proyectos Streamlit">
+<link rel="canonical" href="https://revaliu.com/tableros-kpi/">
+<style>
+  :root{--navy:#0D1B2A;--navy2:#1B2D40;--gold:#C9A84C;--gold-light:#E8C97A;--white:#FFFFFF;--gray:#F4F6F8;--text:#2D3748;--text-light:#718096;--green:#38A169;--amber:#D69E2E;--red:#E53E3E}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:var(--white)}
+  nav{background:var(--navy);padding:0 5%;display:flex;justify-content:space-between;align-items:center;height:64px;position:sticky;top:0;z-index:100}
+  .logo{color:var(--gold);font-size:1.4rem;font-weight:700;letter-spacing:1px;text-decoration:none}
+  .nav-links a{color:rgba(255,255,255,.8);text-decoration:none;margin-left:24px;font-size:.92rem}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+  .nav-cta{background:var(--gold);color:var(--navy)!important;padding:8px 18px;border-radius:6px;font-weight:600}
+  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:90px 5% 70px;text-align:center}
+  .breadcrumb{color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:20px}
+  .breadcrumb a{color:var(--gold);text-decoration:none}
+  .hero-tag{display:inline-block;background:rgba(201,168,76,.15);color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:6px 16px;border-radius:20px;font-size:.85rem;margin-bottom:20px}
+  h1{color:var(--white);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;line-height:1.25;max-width:820px;margin:0 auto 20px}
+  h1 span{color:var(--gold)}
+  .hero p{color:rgba(255,255,255,.75);font-size:1.1rem;max-width:600px;margin:0 auto 32px;line-height:1.7}
+  .btn-primary{background:var(--gold);color:var(--navy);padding:14px 32px;border-radius:8px;font-weight:700;font-size:1rem;text-decoration:none;display:inline-block;transition:all .2s}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+  .section{padding:70px 5%;max-width:1100px;margin:0 auto}
+  .section-tag{color:var(--gold);font-weight:600;font-size:.88rem;letter-spacing:1px;text-transform:uppercase}
+  h2{font-size:clamp(1.5rem,2.8vw,2.1rem);color:var(--navy);margin:12px 0 36px}
+  .gray-bg{background:var(--gray)}
+  /* SEMÁFORO MOCK */
+  .semaforo-mock{background:var(--navy);border-radius:16px;padding:28px;max-width:860px;margin:0 auto 40px;overflow-x:auto}
+  .mock-label{color:var(--gold);font-size:.85rem;font-weight:600;margin-bottom:16px}
+  table.mock-table{width:100%;border-collapse:collapse;font-size:.85rem}
+  .mock-table th{color:rgba(255,255,255,.6);padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.1);font-weight:500}
+  .mock-table td{color:rgba(255,255,255,.85);padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:700}
+  .badge.green{background:rgba(56,161,105,.25);color:#68D391}
+  .badge.amber{background:rgba(214,158,46,.25);color:#F6E05E}
+  .badge.red{background:rgba(229,62,62,.25);color:#FC8181}
+  /* KPI GRID */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .kpi-card{border:1px solid #E2E8F0;border-radius:12px;padding:28px 24px;transition:all .3s}
+  .kpi-card:hover{border-color:var(--gold);box-shadow:0 6px 24px rgba(201,168,76,.12)}
+  .kpi-icon{font-size:2rem;margin-bottom:14px}
+  .kpi-card h3{color:var(--navy);font-size:1.05rem;margin-bottom:10px}
+  .kpi-card p{font-size:.88rem;color:var(--text-light);line-height:1.65}
+  .kpi-tag{display:inline-block;background:rgba(201,168,76,.1);color:var(--gold);border-radius:4px;padding:3px 8px;font-size:.78rem;font-weight:600;margin-top:12px}
+  /* PAIN POINTS */
+  .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+  .pain-item{display:flex;gap:14px;margin-bottom:20px}
+  .pain-item .emoji{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+  .pain-item h4{color:var(--navy);font-size:.97rem;margin-bottom:4px}
+  .pain-item p{color:var(--text-light);font-size:.88rem;line-height:1.6}
+  /* AUTOMATIONS */
+  .auto-list{display:grid;gap:16px}
+  .auto-item{background:var(--white);border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:18px 20px;display:flex;gap:16px;align-items:flex-start}
+  .auto-num{background:var(--gold);color:var(--navy);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0}
+  .auto-item h4{color:var(--navy);font-size:.97rem;margin-bottom:5px}
+  .auto-item p{color:var(--text-light);font-size:.88rem;line-height:1.6}
+  .cta-block{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);padding:70px 5%;text-align:center}
+  .cta-block h2{color:var(--white);font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:14px}
+  .cta-block p{color:rgba(255,255,255,.75);font-size:1rem;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+  .btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:15px 34px;border-radius:8px;font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s}
+  .btn-wa:hover{background:#1ebe5d;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.35)}
+  footer{background:var(--navy);padding:36px 5%;text-align:center}
+  footer p{color:rgba(255,255,255,.5);font-size:.87rem}
+  footer a{color:var(--gold);text-decoration:none}
+  @media(max-width:768px){.pain-grid{grid-template-columns:1fr}nav .nav-links{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">REVALIU</a>
+  <div class="nav-links">
+    <a href="/modelos-riesgo/">Riesgo Cuantitativo</a>
+    <a href="/project-finance/">Project Finance</a>
+    <a href="/tableros-financieros/">Tableros</a>
+    <a href="/tableros-kpi/" class="active">KPIs PM</a>
+    <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20necesito%20un%20tablero%20KPI%20para%20gestión%20de%20proyectos" target="_blank" class="nav-cta">Agendar Demo</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="/">Inicio</a> › Tableros KPI para Project Managers</div>
+  <div class="hero-tag">PMO · Control de Proyectos · Alertas Automáticas</div>
+  <h1>Visibilidad Total de <span>Todos sus Proyectos</span> en un Solo Panel</h1>
+  <p>Tableros KPI automatizados para project managers y gerentes de PMO. Semáforos, alertas y reportes para gerencia — sin Excel, sin consolidar manualmente.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20necesito%20un%20tablero%20KPI%20para%20gestión%20de%20proyectos.%20Quisiera%20ver%20una%20demo" target="_blank" class="btn-primary">📲 Ver Demo Ahora</a>
+</section>
+
+<div class="section">
+  <div class="section-tag">Vista Previa · Panel de Control</div>
+  <h2>Semáforo de proyectos en tiempo real</h2>
+  <div class="semaforo-mock">
+    <div class="mock-label">🎯 Panel PMO · 6 Proyectos Activos · Actualizado: hoy 08:30</div>
+    <div style="overflow-x:auto">
+    <table class="mock-table">
+      <tr><th>Proyecto</th><th>Avance</th><th>Presupuesto</th><th>Fecha</th><th>Estado</th></tr>
+      <tr><td>Torre Residencial Norte</td><td>68%</td><td>$12.4B / $14B</td><td>Sep 2026</td><td><span class="badge green">● En tiempo</span></td></tr>
+      <tr><td>Planta Solar 5MW</td><td>42%</td><td>$8.9B / $9.2B</td><td>Dic 2026</td><td><span class="badge amber">● Riesgo</span></td></tr>
+      <tr><td>Línea de Producción L3</td><td>91%</td><td>$3.1B / $3.0B</td><td>Jul 2026</td><td><span class="badge red">● Alerta</span></td></tr>
+      <tr><td>Bodega Logística Zona Franca</td><td>25%</td><td>$5.2B / $18B</td><td>Mar 2027</td><td><span class="badge green">● En tiempo</span></td></tr>
+      <tr><td>Modernización Planta Cacao</td><td>55%</td><td>$2.8B / $4.1B</td><td>Oct 2026</td><td><span class="badge amber">● Riesgo</span></td></tr>
+    </table>
+    </div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section">
+  <div class="section-tag">¿Por qué lo necesita?</div>
+  <h2>Los problemas que resolvemos</h2>
+  <div class="pain-grid">
+    <div>
+      <div class="pain-item">
+        <div class="emoji">😤</div>
+        <div><h4>Consolidar reportes toma 2 días</h4><p>Cada gerente de proyecto tiene su propio Excel. Alguien tiene que consolidad todo manualmente para la reunión del lunes.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="emoji">😰</div>
+        <div><h4>Los problemas se descubren tarde</h4><p>Cuando el semáforo está en rojo, el proyecto ya lleva semanas en problemas. No hay alertas tempranas.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="emoji">📉</div>
+        <div><h4>Gerencia pide datos que no existen</h4><p>La junta quiere ver el avance vs. presupuesto de todos los proyectos. Tardan horas en preparar esa presentación.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="pain-item">
+        <div class="emoji">✅</div>
+        <div><h4>Un solo dashboard para toda la PMO</h4><p>Todos los proyectos en un panel. El lunes a las 8am el reporte ya está listo — automáticamente.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="emoji">🚨</div>
+        <div><h4>Alertas al WhatsApp antes de que sea tarde</h4><p>Si un proyecto supera el 90% del presupuesto o se atrasa más de 2 semanas, le llega una alerta inmediata.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="emoji">📊</div>
+        <div><h4>Reporte para gerencia con 1 clic</h4><p>PDF ejecutivo con semáforos, avance y riesgos, listo para enviar a la junta directiva sin preparación adicional.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+  <div class="section-tag">Indicadores que incluimos</div>
+  <h2>KPIs que monitorea el tablero</h2>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">📐</div>
+      <h3>Avance Físico vs. Cronograma</h3>
+      <p>% de avance real vs. planificado. Semáforo automático por hitos críticos y fecha de entrega.</p>
+      <span class="kpi-tag">SPI · Schedule Variance</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💰</div>
+      <h3>Control de Presupuesto</h3>
+      <p>Ejecutado vs. presupuestado por partida. CPI (Cost Performance Index) y proyección de costo final.</p>
+      <span class="kpi-tag">CPI · EAC · ETC</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">👥</div>
+      <h3>Recursos y Capacidad</h3>
+      <p>Carga de trabajo por recurso, cuello de botella en el equipo y disponibilidad proyectada.</p>
+      <span class="kpi-tag">Resource Loading · Gantt</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">⚠️</div>
+      <h3>Matriz de Riesgos Activos</h3>
+      <p>Riesgos identificados con probabilidad, impacto y acciones de mitigación por responsable.</p>
+      <span class="kpi-tag">Risk Heat Map</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">📋</div>
+      <h3>Entregables y Calidad</h3>
+      <p>Estado de entregables, pendientes de aprobación, % de retrabajo y satisfacción del cliente.</p>
+      <span class="kpi-tag">Milestone Tracker</span>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">💬</div>
+      <h3>Alertas WhatsApp Automáticas</h3>
+      <p>Notificación inmediata cuando un KPI supera el umbral: retraso, sobrecosto o riesgo crítico.</p>
+      <span class="kpi-tag">WhatsApp API · Telegram</span>
+    </div>
+  </div>
+</div>
+
+<div class="gray-bg">
+<div class="section">
+  <div class="section-tag">Automatizaciones incluidas</div>
+  <h2>Lo que pasa sin que nadie lo haga manualmente</h2>
+  <div class="auto-list">
+    <div class="auto-item">
+      <div class="auto-num">1</div>
+      <div><h4>Actualización automática de datos</h4><p>Conectamos el dashboard a su fuente de datos (Excel compartido, SQL, Monday.com, Jira, o Google Sheets). Se actualiza solo cada día.</p></div>
+    </div>
+    <div class="auto-item">
+      <div class="auto-num">2</div>
+      <div><h4>Reporte semanal de PMO por email</h4><p>Cada lunes a las 8am llega un resumen ejecutivo en PDF con el semáforo de todos los proyectos. Sin que nadie lo prepare.</p></div>
+    </div>
+    <div class="auto-item">
+      <div class="auto-num">3</div>
+      <div><h4>Alerta inmediata al WhatsApp</h4><p>Si un proyecto excede el 90% del presupuesto o se atrasa más de 2 semanas, le llega un mensaje a su WhatsApp (+57 318 432 2874) en tiempo real.</p></div>
+    </div>
+    <div class="auto-item">
+      <div class="auto-num">4</div>
+      <div><h4>Presentación ejecutiva para junta</h4><p>Con un clic genera un PDF con gráficos de avance, semáforos y proyección de cierre. Listo para mostrar en cualquier reunión de gerencia.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<section class="cta-block">
+  <h2>¿Cuántos proyectos tiene activos sin visibilidad en tiempo real?</h2>
+  <p>En 48 horas le mostramos un prototipo con sus datos reales. Sin costo, sin compromiso.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20tengo%20proyectos%20activos%20y%20necesito%20un%20tablero%20KPI%20para%20controlarlos.%20Quisiera%20una%20demo" target="_blank" class="btn-wa">
+    💬 Hablar con Sergio Ahora
+  </a>
+</section>
+
+<footer>
+  <p>© 2026 Revaliu · <a href="/">Inicio</a> · <a href="/tableros-financieros/">Tableros Financieros</a> · <a href="/project-finance/">Project Finance</a><br>
+  <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> · <a href="https://wa.me/573184322874">+57 318 432 2874</a></p>
+</footer>
+</body>
+</html>
