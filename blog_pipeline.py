@@ -15,7 +15,7 @@ load_dotenv(Path(__file__).parent.parent / "radar_nichos" / ".env")
 
 GEMINI_API_KEY  = os.getenv("GEMINI_API_KEY", "")
 WHATSAPP_NUMBER = "+573184322874"
-SITE_URL        = "https://revaliu.com"
+SITE_URL        = "https://seran97.github.io/revaliu-b2b"
 DB_PATH         = Path(__file__).parent / "db" / "revaliu_b2b.db"
 DOCS_BLOG       = Path(__file__).parent / "docs" / "blog"
 DOCS_BLOG.mkdir(parents=True, exist_ok=True)
@@ -435,6 +435,28 @@ footer a{{color:var(--gold);text-decoration:none}}
     print(f"  [Blog Hub] Regenerado con {len(arts)} artículos")
 
 
+def rebuild_sitemap():
+    """Regenera sitemap.xml con todas las páginas estáticas del sitio."""
+    docs_dir = Path(__file__).parent / "docs"
+    urls = []
+    for f in sorted(docs_dir.rglob("index.html")):
+        rel = f.parent.relative_to(docs_dir).as_posix()
+        loc = f"{SITE_URL}/" if rel == "." else f"{SITE_URL}/{rel}/"
+        urls.append(loc)
+
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for u in urls:
+        is_home = u == f"{SITE_URL}/"
+        priority = "1.0" if is_home else "0.8"
+        freq = "daily" if is_home else "weekly"
+        lines.append(f"  <url><loc>{u}</loc><changefreq>{freq}</changefreq><priority>{priority}</priority></url>")
+    lines.append("</urlset>")
+
+    (docs_dir / "sitemap.xml").write_text("\n".join(lines), encoding="utf-8")
+    print(f"  [Sitemap] Regenerado con {len(urls)} URLs")
+
+
 # ── Main Pipeline ──────────────────────────────────────────────────────────────
 
 def run(max_articles: int = 3):
@@ -469,6 +491,7 @@ def run(max_articles: int = 3):
             time.sleep(3)
 
     rebuild_blog_hub()
+    rebuild_sitemap()
     print(f"\n  Blog pipeline completo: {publicados} artículos publicados")
     return publicados
 
