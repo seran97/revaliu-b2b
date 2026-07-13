@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-blog_pipeline.py — Motor SEO automático para Revaliu B2B
+blog_pipeline.py — Motor SEO automático para ValorasQuant B2B
 Flujo: RSS feeds (BanRep/Superfinanciera/Portafolio) → Gemini → HTML → docs/blog/
 Frecuencia: 2-3 artículos semanales en piloto automático.
 """
@@ -100,7 +100,7 @@ def fetch_rss(feed: dict) -> list[dict]:
     """Descarga y parsea un feed RSS. Retorna lista de items nuevos."""
     try:
         resp = requests.get(feed["url"], timeout=12,
-                            headers={"User-Agent": "Revaliu-Bot/1.0"})
+                            headers={"User-Agent": "ValorasQuant-Bot/1.0"})
         if resp.status_code != 200:
             print(f"  [RSS] {feed['nombre']}: HTTP {resp.status_code}")
             return []
@@ -172,18 +172,18 @@ Noticia fuente ({item['feed']['nombre']}):
 Título: {item['titulo']}
 Resumen: {item['resumen']}
 
-Escribe un artículo de análisis financiero profesional en español para el blog de Revaliu (consultoría cuantitativa Colombia).
+Escribe un artículo de análisis financiero profesional en español para el blog de ValorasQuant (consultoría cuantitativa Colombia).
 
 El artículo debe:
 1. Analizar el impacto de la noticia en empresas, cooperativas o project managers en Colombia
-2. Conectar con los servicios de Revaliu: modelos de riesgo, project finance, tableros financieros
+2. Conectar con los servicios de ValorasQuant: modelos de riesgo, project finance, tableros financieros
 3. Terminar SIEMPRE con este CTA exacto (no modificar):
 
 ---CTA---
 <div class="article-cta">
   <h3>¿Cómo afecta esto a su empresa?</h3>
-  <p>En Revaliu analizamos el impacto de estos cambios en su modelo de negocio específico. Agenda un diagnóstico gratuito de 30 minutos.</p>
-  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20leí%20el%20artículo%20en%20Revaliu%20y%20quiero%20analizar%20el%20impacto%20en%20mi%20empresa" class="cta-wa-btn">💬 WhatsApp: +57 318 432 2874</a>
+  <p>En ValorasQuant analizamos el impacto de estos cambios en su modelo de negocio específico. Agenda un diagnóstico gratuito de 30 minutos.</p>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20leí%20el%20artículo%20en%20ValorasQuant%20y%20quiero%20analizar%20el%20impacto%20en%20mi%20empresa" class="cta-wa-btn">💬 WhatsApp: +57 318 432 2874</a>
 </div>
 ---FIN CTA---
 
@@ -267,8 +267,8 @@ def build_article_html(data: dict, item: dict, fecha: str) -> str:
     cta_html = data.get("cta_html") or f"""
 <div class="article-cta">
   <h3>¿Cómo afecta esto a su empresa?</h3>
-  <p>En Revaliu analizamos el impacto de estos cambios en su modelo de negocio. Agenda un diagnóstico gratuito.</p>
-  <a href="https://wa.me/573184322874?text=Hola+Sergio%2C+le%C3%AD+el+art%C3%ADculo+en+Revaliu+y+quiero+analizar+el+impacto+en+mi+empresa" class="cta-wa-btn">💬 WhatsApp: +57 318 432 2874</a>
+  <p>En ValorasQuant analizamos el impacto de estos cambios en su modelo de negocio. Agenda un diagnóstico gratuito.</p>
+  <a href="https://wa.me/573184322874?text=Hola+Sergio%2C+le%C3%AD+el+art%C3%ADculo+en+ValorasQuant+y+quiero+analizar+el+impacto+en+mi+empresa" class="cta-wa-btn">💬 WhatsApp: +57 318 432 2874</a>
 </div>"""
 
     return f"""<!DOCTYPE html>
@@ -276,13 +276,13 @@ def build_article_html(data: dict, item: dict, fecha: str) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{data['titulo_seo']} | Revaliu</title>
+<title>{data['titulo_seo']} | ValorasQuant</title>
 <meta name="description" content="{data['meta_description']}">
-<meta name="keywords" content="{data['keyword_seo']}, consultoría financiera Colombia, Revaliu">
+<meta name="keywords" content="{data['keyword_seo']}, consultoría financiera Colombia, ValorasQuant">
 <link rel="canonical" href="{SITE_URL}/blog/{slug}/">
 <script type="application/ld+json">
 {{"@context":"https://schema.org","@type":"Article","headline":"{data['titulo_seo']}",
-"author":{{"@type":"Organization","name":"Revaliu"}},"publisher":{{"@type":"Organization","name":"Revaliu","telephone":"+573184322874"}},
+"author":{{"@type":"Organization","name":"ValorasQuant"}},"publisher":{{"@type":"Organization","name":"ValorasQuant","telephone":"+573184322874"}},
 "datePublished":"{fecha}","description":"{data['meta_description']}"}}
 </script>
 {ARTICLE_CSS}
@@ -290,12 +290,12 @@ def build_article_html(data: dict, item: dict, fecha: str) -> str:
 <body>
 <nav>
   <a class="logo" href="/">REVALIU</a>
-  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20lei%20el%20blog%20de%20Revaliu%20y%20quisiera%20agendar%20un%20diagnostico" target="_blank" class="nav-cta">Agendar Diagnóstico</a>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20lei%20el%20blog%20de%20ValorasQuant%20y%20quisiera%20agendar%20un%20diagnostico" target="_blank" class="nav-cta">Agendar Diagnóstico</a>
 </nav>
 <div class="hero-article">
   <div class="breadcrumb"><a href="/">Inicio</a> › <a href="/blog/">Blog</a> › Análisis</div>
   <h1>{data['titulo_seo']}</h1>
-  <div class="article-meta">Revaliu · {fecha[:10]} · Fuente: {item['feed']['nombre']}</div>
+  <div class="article-meta">ValorasQuant · {fecha[:10]} · Fuente: {item['feed']['nombre']}</div>
 </div>
 <div class="article-wrap">
   <div class="source-box">📰 Basado en: <a href="{item.get('url','#')}" target="_blank" rel="nofollow">{item['titulo']}</a> — {item['feed']['nombre']}</div>
@@ -308,7 +308,7 @@ def build_article_html(data: dict, item: dict, fecha: str) -> str:
   {cta_html}
 </div>
 <footer>
-  <p>© 2026 Revaliu · <a href="/">Inicio</a> · <a href="/blog/">Blog</a> · <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> · <a href="https://wa.me/573184322874">+57 318 432 2874</a></p>
+  <p>© 2026 ValorasQuant · <a href="/">Inicio</a> · <a href="/blog/">Blog</a> · <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a> · <a href="https://wa.me/573184322874">+57 318 432 2874</a></p>
 </footer>
 </body>
 </html>"""
@@ -383,7 +383,7 @@ def rebuild_blog_hub():
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blog de Análisis Financiero Colombia | Riesgo, Project Finance y Automatización | Revaliu</title>
+<title>Blog de Análisis Financiero Colombia | Riesgo, Project Finance y Automatización | ValorasQuant</title>
 <meta name="description" content="Análisis de riesgo cuantitativo, project finance y automatización financiera para empresas en Colombia. Publicaciones semanales gratuitas.">
 <style>
 :root{{--navy:#0D1B2A;--gold:#C9A84C;--white:#fff;--gray:#F4F6F8;--text:#2D3748;--text-light:#718096}}
@@ -426,9 +426,9 @@ footer a{{color:var(--gold);text-decoration:none}}
 <div class="cta-sub">
   <h2>¿Quiere análisis a medida para su empresa?</h2>
   <p>Lo que publicamos en el blog es genérico. Lo que hacemos para nuestros clientes es específico para su caso.</p>
-  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20leí%20el%20blog%20de%20Revaliu%20y%20quiero%20hablar%20de%20mi%20caso" target="_blank" class="btn-wa">💬 +57 318 432 2874</a>
+  <a href="https://wa.me/573184322874?text=Hola%20Sergio%2C%20leí%20el%20blog%20de%20ValorasQuant%20y%20quiero%20hablar%20de%20mi%20caso" target="_blank" class="btn-wa">💬 +57 318 432 2874</a>
 </div>
-<footer><p>© 2026 Revaliu · <a href="/">Inicio</a> · <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a></p></footer>
+<footer><p>© 2026 ValorasQuant · <a href="/">Inicio</a> · <a href="mailto:srojas@revaliu.com">srojas@revaliu.com</a></p></footer>
 </body>
 </html>"""
     (DOCS_BLOG / "index.html").write_text(hub_html, encoding="utf-8")
