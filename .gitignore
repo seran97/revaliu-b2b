@@ -5,3 +5,5 @@ __pycache__/
 .last_blog_run
 main_output.log
 main_error.log
+main_b2b_output.log
+main_b2b_error.log
